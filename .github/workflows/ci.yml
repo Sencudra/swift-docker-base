@@ -15,8 +15,8 @@ env:
   SWIFT_VERSION: "6.2"
 
 jobs:
-  run-nim-compiler-in-docker-contain:
-    name: Build image and run nim compiler inside
+  run-swift-compiler-in-docker-contain:
+    name: Build image and run swift test inside
     runs-on: ubuntu-24.04
 
     steps:
@@ -30,9 +30,13 @@ jobs:
       run: |
         docker create \
           --name test-swift-docker-base \
-          --entrypoint bin/test-image-entrypoint.sh \
+          --entrypoint /bin/bash \
+          -v "${{ github.workspace }}/bin/test-image-entrypoint.sh:/tmp/test-image-entrypoint.sh:ro" \
           -v "${{ github.workspace }}/src/TestTool:/tmp/TestTool:ro" \
-          "exercism/swift-docker-base:${SWIFT_VERSION}"
+          "exercism/swift-docker-base:${SWIFT_VERSION}" \
+          -c "/tmp/test-image-entrypoint.sh"
 
     - name: Run container
-      run: docker start -a test-swift-docker-base
+      run: |
+        docker start -a test-swift-docker-base
+        docker rm test-swift-docker-base
