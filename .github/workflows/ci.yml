@@ -32,7 +32,7 @@ jobs:
           --name test-swift-docker-base \
           --entrypoint /bin/bash \
           -v "${{ github.workspace }}/bin/test-image-entrypoint.sh:/tmp/test-image-entrypoint.sh:ro" \
-          -v "${{ github.workspace }}/src/TestTool:/tmp/TestTool:ro" \
+          -v "${{ github.workspace }}/src/TestTool:/tmp/TestTool" \
           "exercism/swift-docker-base:${SWIFT_VERSION}" \
           -c "/tmp/test-image-entrypoint.sh"
 
