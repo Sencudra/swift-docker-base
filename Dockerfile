@@ -33,7 +33,6 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true && ap
     ## 
     ## Customization for Exercism Swift Track.
     ##
-    upx-ucl \
     && apt-get -y autoremove \
     && apt-get -yq clean \
     ##
@@ -126,16 +125,15 @@ RUN set -e; \
         /usr/lib/swift_static \
         /usr/lib/swift/embedded \
         /usr/lib/swift/FrameworkABIBaseline \
-    ## Remove files modified during this build (those we touched during tar extraction)
+    ## Remove files we touched during tar extraction
     && find /usr/share/docc -type f -mmin -10 -exec rm -v {} \; \
     && find /usr/share/pm -type f -mmin -10 -exec rm -v {} \; \
     && find /usr/local -type f -mmin -10 -exec rm -v {} \; \
-    ## Strip and upx compress files modified during this build
+    ## Strip files we touched during tar extraction
     && find /usr/lib -name "*.so" -mmin -10 \
         -exec sh -c 'printf "Modifying: %s\n" "$1" && strip "$1"' _ {} \; \
     && find /usr/bin -type f -perm /111 ! -name "*.*" -mmin -10 \
         -exec sh -c 'printf "Modifying: %s\n" "$1" && strip "$1"' _ {} \; \
-    # && upx --fast "$1"
     ##
     ## End of customization.
     ##
