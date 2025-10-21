@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.github/CODEOWNERS'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '.github/CODEOWNERS'
+
+env:
+  SWIFT_VERSION: "6.2"
+  PROJECT_PATH: "${{ github.workspace }}"
+
+jobs:
+  run-swift-compiler-in-docker-contain:
+    name: Build image and run swift test inside
+    runs-on: ubuntu-24.04
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+    - name: Build & test image
+      run: ./bin/ci_build.sh
