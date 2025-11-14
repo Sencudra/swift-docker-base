@@ -1,9 +1,6 @@
 name: Deploy docker image
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -11,8 +8,7 @@ permissions:
 
 jobs:
   build-and-push-image:
-    if: github.repository_owner == 'exercism' # Stops this job from running on forks.
-    uses: exercism/github-actions/.github/workflows/docker-build-push-image.yml@main
+    uses: ./docker-build-push-image-test.yml
     with:
       aws_ecr: false
       platform: linux/amd64,linux/arm64
