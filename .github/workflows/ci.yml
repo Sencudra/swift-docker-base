@@ -1,10 +1,5 @@
 name: CI
 on:
-  push:
-    paths-ignore:
-      - '**.md'
-      - 'LICENSE'
-      - '.github/CODEOWNERS'
   pull_request:
     paths-ignore:
       - '**.md'
